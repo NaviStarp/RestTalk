@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://skillicons.dev">
-    <img src="https://skillicons.dev/icons?i=git,python,django,rest,postgres" />
+    <img src="https://skillicons.dev/icons?i=git,python,django" />
   </a>
 </p>
 
@@ -59,9 +59,9 @@ conda create --name textify_env --file requirements.txt
 4. Configura las credenciales de Google OAuth en `.env`:
 
    ```env
-    GOOGLE_OAUTH_CLIENT_ID= Id del cliente
-    GOOGLE_OAUTH_CLIENT_SECRET= Secreto del cliente
-    GOOGLE_OAUTH_CALLBACK_URL= URL a la que devuelve google
+    GOOGLE_OAUTH_CLIENT_ID=Id del cliente
+    GOOGLE_OAUTH_CLIENT_SECRET=Secreto del cliente
+    GOOGLE_OAUTH_CALLBACK_URL=URL a la que devuelve google
 
    ```
 
