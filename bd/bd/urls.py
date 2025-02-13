@@ -15,8 +15,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # Endpoints de dj-rest-auth (login, logout, cambio de contraseña, etc.)
+    path('dj-rest-auth/', include('dj_rest_auth.urls')),
+    # Endpoints de registro (que incluyen verificación de email)
+    path('accounts/', include('allauth.urls')),  # Esto añade todas las URLs de allauth
+    path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
 ]
