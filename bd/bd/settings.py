@@ -22,18 +22,18 @@ GOOGLE_OAUTH_CALLBACK_URL = os.getenv("GOOGLE_OAUTH_CALLBACK_URL")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+BASE_URL = 'http://localhost:8000'  # CAMBIAR ESTO DESPUES
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-o8p5tvw(8udmd#wcq@(!3b&60swk%k9&0@ek0=rqt2^aion0ts'
+
+SECRET_KEY = os.getenv("SECRET_KEY") # Guardar al .env
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*'] # Cambiar para despues
 
 
 # Application definition
