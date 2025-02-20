@@ -18,7 +18,6 @@ from .serializers import UserSerializer
 from .models import User
 
 
-
 class GoogleLoginCallback(APIView):
     def get(self, request):
         code = request.GET.get('code')
@@ -34,7 +33,7 @@ class GoogleLoginCallback(APIView):
                 'redirect_uri': settings.GOOGLE_OAUTH_CALLBACK_URL,
                 'grant_type': 'authorization_code'
             }
-            
+
             token_response = requests.post(token_url, data=data)
             token_data = token_response.json()
 
@@ -60,25 +59,28 @@ class GoogleLoginCallback(APIView):
 
             # Create token
             token, _ = Token.objects.get_or_create(user=user)
-            
+
             return Response({
                 'token': token.key,
                 'user_id': user.id,
                 'email': user.email
             })
-            
+
         except requests.RequestException as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
 
 class UserList(generics.ListCreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAdminUser]
 
+
 class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAdminUser]
+
 
 class LoginView(APIView):
     permission_classes = [AllowAny]
@@ -90,11 +92,13 @@ class LoginView(APIView):
         username = request.data.get('username')
         password = request.data.get('password')
         user = authenticate(username=username, password=password)
+        print(user)
         if user:
             login(request, user)
             token, created = Token.objects.get_or_create(user=user)
+            # return Response({"token": token.key, "user_id": user.id, "username": user.username}) Ahora que sabemos que funciona, voy a redirigir a otro sitio
             return Response({"token": token.key, "user_id": user.id, "username": user.username})
-        return Response({"error": "Invalid credentials"}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"error": "Invalid credentials", "contra": password, "usuario": username}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class RegisterView(APIView):
@@ -111,7 +115,6 @@ class RegisterView(APIView):
             user.save()
             return Response({"message": "User registered successfully"}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 
 class LoginPage(View):
