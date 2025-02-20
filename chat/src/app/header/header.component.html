@@ -1,9 +1,14 @@
 <nav class="navbar">
-    <a  href="/" class="logo">
-            <img src="assets/images/logo_pequeño.png" alt="Textify" class="logo-img">
-            Textify
+    <a href="/" class="logo">
+        <img src="assets/images/logo_pequeño.png" alt="Textify" class="logo-img">
+        Textify
     </a>
-    <div class="nav-links">
+    <button class="menu-icon" (click)="toggleMenu()">aasdasd 
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    <div class="nav-links" [ngClass]="{'open': isMenuOpen}">
         <a href="/login">Iniciar sesión</a>
         <a href="/registro">Crear cuenta</a>
         <a href="/privacidad">Privacidad</a>

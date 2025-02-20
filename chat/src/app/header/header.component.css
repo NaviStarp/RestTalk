@@ -82,8 +82,7 @@
     text-align: center;
   }
 
-  /* Cuando se activa (clic en el botón) se muestra el menú */
-  .open {
+  .nav-links.open {
     display: flex;
   }
 }
