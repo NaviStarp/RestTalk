@@ -20,6 +20,7 @@
   font-weight: 500;
   text-decoration: none;
 }
+
 .logo img {
   width: 40px;
   height: 40px;
@@ -44,4 +45,45 @@
 .nav-links a:hover {
   background-color: rgba(255, 255, 255, 0.2);
   transform: translateY(-2px);
+}
+/* El botón de menú está oculto por defecto */
+.menu-icon {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+.menu-icon span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background-color: white;
+  transition: 0.3s;
+}
+
+/* Solo se muestra el botón y se ajusta el menú en pantallas pequeñas */
+@media (max-width: 768px) {
+  .menu-icon {
+    display: flex;
+  }
+
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    background: linear-gradient(90deg, #2e7d32, #1b5e20);
+    padding: 1rem;
+    text-align: center;
+  }
+
+  /* Cuando se activa (clic en el botón) se muestra el menú */
+  .open {
+    display: flex;
+  }
 }

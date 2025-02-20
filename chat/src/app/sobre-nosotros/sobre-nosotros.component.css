@@ -1,0 +1,138 @@
+    /* Estilos base */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      }
+  
+      body {
+        background-color: #E8F5E9;
+        color: #333;
+      }
+  
+      /* Encabezado */
+      .header {
+        background-color: #2E7D32;
+        color: #fff;
+        padding: 1rem 2rem;
+      }
+  
+      .header h1 {
+        font-size: 2rem;
+      }
+  
+      /* Sección Hero */
+      .hero {
+        background: linear-gradient(90deg, #2E7D32, #1B5E20);
+        color: white;
+        padding: 7rem 2rem;
+        text-align: center;
+      }
+  
+      .hero h2 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+  
+      .hero p {
+        font-size: 1.2rem;
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: 1.6;
+      }
+  
+      /* Contenedor principal */
+      .about-container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 2rem;
+        background-color: #fff;
+        border-radius: 8px;
+      }
+  
+      .about-container h2 {
+        font-size: 2rem;
+        color: #2E7D32;
+        margin-bottom: 1rem;
+        border-bottom: 2px solid #C8E6C9;
+        padding-bottom: 0.5rem;
+      }
+  
+      .about-container p {
+        font-size: 1.1rem;
+        color: #333;
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+      }
+  
+    /* Sección del Equipo */
+    .team {
+      /* Flex para que los miembros aparezcan en una sola línea */
+      display: flex;
+      flex-wrap: nowrap;          /* No se permite que hagan salto de línea */
+      overflow-x: auto;          /* Permite desplazamiento horizontal si no cabe en la pantalla */
+      gap: 2rem;                 /* Espacio entre miembros */
+      margin-top: 2rem;
+      padding-bottom: 1rem;      /* Deja un poco de espacio para el scroll horizontal */
+    }
+
+    .team-member {
+      min-width: 160px;          /* Ancho mínimo para cada tarjeta */
+      background-color: #C8E6C9;
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+      flex: 0 0 auto;            /* Para que no se reduzcan al tamaño del contenedor */
+      transition: box-shadow 0.3s;
+    }
+  
+      .team-member:hover {
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      }
+  
+      .team-member img {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 1rem;
+      }
+  
+      .team-member h4 {
+        color: #2E7D32;
+        margin-bottom: 0.5rem;
+      }
+  
+      .team-member p {
+        color: #388E3C;
+        font-size: 0.95rem;
+      }
+  
+      /* Pie de página */
+      .footer {
+        background-color: #2E7D32;
+        color: #fff;
+        text-align: center;
+        padding: 1rem;
+        margin-top: 2rem;
+      }
+  
+      .footer p {
+        font-size: 0.9rem;
+      }
+  
+      /* Responsividad */
+      @media (max-width: 768px) {
+        .hero h2 {
+          font-size: 2rem;
+        }
+  
+        .hero p {
+          font-size: 1rem;
+        }
+  
+        .about-container h2 {
+          font-size: 1.5rem;
+        }
+      }
