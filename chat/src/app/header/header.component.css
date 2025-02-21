@@ -31,12 +31,8 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-<<<<<<< HEAD
-} 
-=======
   object-fit: cover;
 }
->>>>>>> bea2108dfff54933c0287c798ee82c7bf60e3cdd
 
 .nav-links {
   display: flex;
