@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-CommonModule
+
 @Component({
   selector: 'app-header',
   standalone: true,
@@ -13,7 +13,6 @@ export class HeaderComponent  {
 
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;
-    console.log('Menu toggled:', this.isMenuOpen);
   }
   
 }
