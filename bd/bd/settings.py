@@ -66,6 +66,7 @@ INSTALLED_APPS = [
     'corsheaders',
     # Mis aplicaciones
     'accounts',
+    'chats',
 ]
 # django.contrib.sites
 SITE_ID = 1

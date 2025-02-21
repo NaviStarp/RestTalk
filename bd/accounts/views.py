@@ -95,7 +95,7 @@ class LoginView(APIView):
         print(user)
         if user:
             login(request, user)
-            token, created = Token.objects.get_or_create(user=user)
+            token = Token.objects.get_or_create(user=user)
             # return Response({"token": token.key, "user_id": user.id, "username": user.username}) Ahora que sabemos que funciona, voy a redirigir a otro sitio
             return Response({"token": token.key, "user_id": user.id, "username": user.username})
         return Response({"error": "Invalid credentials", "contra": password, "usuario": username}, status=status.HTTP_400_BAD_REQUEST)
@@ -115,7 +115,12 @@ class RegisterView(APIView):
             user.set_password(request.data["password"])
             user.is_active = True
             user.save()
-            return Response({"message": "User registered successfully"}, status=status.HTTP_201_CREATED)
+            token = Token.objects.get_or_create(user=user)            
+            return Response({
+                "token": token.key,
+                "user_id": user.id,
+                "username": user.username
+            })
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
