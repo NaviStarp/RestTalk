@@ -5,6 +5,6 @@ import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [RouterModule.forRoot(routes), HttpClientModule],
-  exports: [RouterModule]
+   exports: [RouterModule]
 })
 export class AppRoutingModule {}

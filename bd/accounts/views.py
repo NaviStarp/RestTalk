@@ -89,7 +89,7 @@ class LoginView(APIView):
         return Response({"error": "Method not allowed"}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
     def post(self, request):
-        username = request.data.get('username')
+        username = request.data.get('username').lower()
         password = request.data.get('password')
         user = authenticate(username=username, password=password)
         print(user)
@@ -111,7 +111,9 @@ class RegisterView(APIView):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.save()
+            user.username = request.data["username"].lower()
             user.set_password(request.data["password"])
+            user.is_active = True
             user.save()
             return Response({"message": "User registered successfully"}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

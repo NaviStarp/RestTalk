@@ -1,7 +1,5 @@
 import { Routes } from '@angular/router';
 import { PrivacidadComponent } from './privacidad/privacidad.component';
-import { AppComponent } from './app.component';
-import { NotFoundError } from 'rxjs';
 import { InicioComponent } from './inicio/inicio.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { RegistroComponent } from './registro/registro.component';
