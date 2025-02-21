@@ -22,7 +22,7 @@ body {
     gap: 2rem;
     min-height: 80vh;
 }
-
+ 
 .hero-content {
     flex: 1;
     text-align: left;
