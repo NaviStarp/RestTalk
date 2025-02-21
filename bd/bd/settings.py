@@ -28,12 +28,17 @@ BASE_URL = 'http://localhost:8000'  # CAMBIAR ESTO DESPUES
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 
-SECRET_KEY = os.getenv("SECRET_KEY") # Guardar al .env
+SECRET_KEY = os.getenv("SECRET_KEY")  # Guardar al .env
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*'] # Cambiar para despues
+ALLOWED_HOSTS = ['*']  # Cambiar para despues
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://192.168.3.180:4200",  # IP del frontend
+    "http://localhost:4200",      # Para desarrollo local
+]
 
 
 # Application definition
@@ -45,21 +50,21 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #django.contrib.sites
+    # django.contrib.sites
     'django.contrib.sites',
-    #rest_framework
+    # rest_framework
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_simplejwt',
     'dj_rest_auth.registration',
-    #allauth
+    # allauth
     'allauth.socialaccount',
     'allauth',
     'allauth.account',
     'allauth.socialaccount.providers.google',
-    #CORS
+    # CORS
     'corsheaders',
-    #Mis aplicaciones
+    # Mis aplicaciones
     'accounts',
 ]
 # django.contrib.sites
@@ -69,7 +74,7 @@ AUTH_USER_MODEL = 'accounts.User'
 ACCOUNT_LOGIN_METHODS = {'email'}  # Use Email / Password authentication
 ACCOUNT_USERNAME_REQUIRED = True
 ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = "mandatory"  # EMAIL verification is mandatory 
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"  # EMAIL verification is mandatory
 
 # django-allauth (social)
 # Authenticate if local account with this email address already exists
@@ -93,20 +98,21 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 
-
 REST_FRAMEWORK = {
 
     'DEFAULT_PERMISSION_CLASSES': [
-         'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.IsAuthenticated',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
-         'rest_framework_simplejwt.authentication.JWTAuthentication',  # si usas JWT
-         'rest_framework.authentication.SessionAuthentication',        # para autenticación por sesión
+        'rest_framework_simplejwt.authentication.JWTAuthentication',  # si usas JWT
+        # para autenticación por sesión
+        'rest_framework.authentication.SessionAuthentication',
     ],
 }
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:4200",
+    "http://192.168.3.180:4200",  # IP del frontend
 ]
 
 
@@ -120,6 +126,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
+
 ]
 
 ROOT_URLCONF = 'bd.urls'
@@ -191,6 +198,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 # Default primary key field type
+# CRAIZI
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
