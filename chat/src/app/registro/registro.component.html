@@ -1,15 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro</title>
-</head>
-<body>
-    <h1>Registro</h1>
-    <form>
+<app-header></app-header>
+<div style="height: 100px;"></div>
+<form action="http://192.168.3.180:8000/api/v1/register/" method="POST">
+    <div class="imgcontainer">
 
-    </form>
-    <p>¿Ya tienes cuenta? <a href="/login">inicia sesión</a></p>
-</body>
-</html>
+        <div class="container">
+            <h1>Register</h1>
+            <p>Por favor complete este formulario para registrarse.</p>
+            <hr>
+
+            <label for="username"><b>Nombre de usuario:</b></label>
+            <input type="username" placeholder="Nombre de usuario" name="username" id="username" required>
+
+            <label for="email"><b>Email</b></label>
+            <input type="email" placeholder="Email" name="email" id="email" required>
+
+            <label for="psw"><b>Contraseña</b></label>
+            <input type="password" placeholder="Contraseña" name="password" id="psw" required>
+
+            <label for="psw-repeat"><b>Repetir contraseña</b></label>
+            <input type="password" placeholder="Repetir contraseña" name="password_confirmation" id="psw-repeat" required>
+
+            <hr>
+            <p>Al crear una cuenta, aceptas nuestros <a href="/privacidad">Términos y Privacidad </a>.</p>
+
+            <button type="submit" class="registerbtn">Registrarse</button>
+        </div>
+    </div>
+</form>
