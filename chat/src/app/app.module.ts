@@ -1,23 +1,24 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+
 import { AppComponent } from './app.component';
 import { ChatComponent } from './chat/chat.component';
-import { ContactListComponent } from './contact-list/contact-list.component';
-import { ChatWindowComponent } from './chat-window/chat-window.component';
+import { UsuariosChatComponent } from './usuarios-chat/usuarios-chat.component'; // Importa el componente
+import { ConversacionChatComponent } from './conversacion-chat/conversacion-chat.component'; // Importa el componente
 
 @NgModule({
   declarations: [
     AppComponent,
     ChatComponent,
-    ContactListComponent,
-    ChatWindowComponent
+    UsuariosChatComponent, // Declara el componente
+    ConversacionChatComponent // Declara el componente
   ],
   imports: [
     BrowserModule,
-    CommonModule,
-    FormsModule
+    FormsModule,
+    CommonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

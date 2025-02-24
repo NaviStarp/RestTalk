@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
+import { ConversacionChatComponent } from '../conversacion-chat/conversacion-chat.component';
+import { UsuariosChatComponent } from '../usuarios-chat/usuarios-chat.component';
 
 @Component({
   selector: 'app-chat',
+  imports: [ConversacionChatComponent, UsuariosChatComponent],
+  standalone: true,
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
@@ -13,6 +17,7 @@ export class ChatComponent {
     // Define tus mensajes aquí
   ];
   newMessage: string = '';
+
 
   isSelected(contact: any): boolean {
     // Implementa la lógica para verificar si el contacto está seleccionado
