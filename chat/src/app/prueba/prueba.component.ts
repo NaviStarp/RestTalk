@@ -7,16 +7,17 @@ import { Component } from '@angular/core';
   styleUrl: './prueba.component.css'
 })
 export class PruebaComponent {
+
   get token() {
-    return localStorage.getItem('authToken');
+    return typeof localStorage !== 'undefined' ? localStorage.getItem('authToken') : null;
   }
 
   get userId() {
-    return localStorage.getItem('userId');
+    return typeof localStorage !== 'undefined' ? localStorage.getItem('userId') : null;
   }
 
   get username() {
-    return localStorage.getItem('username');
+    return typeof localStorage !== 'undefined' ? localStorage.getItem('username') : null;
   }
 
 }

@@ -15,6 +15,7 @@ import { HeaderComponent } from "../header/header.component";
   styleUrl: './inicio-sesion.component.css'
 })
 export class InicioSesionComponent {
+  
   private http = inject(HttpClient);
   private router = inject(Router);
   private fb = inject(FormBuilder);
