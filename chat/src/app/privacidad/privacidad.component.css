@@ -1,0 +1,115 @@
+/* Estilos Base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;                    
+}
+
+body {
+    background-color: #E8F5E9;
+    color: #333;    
+}
+
+/* Contenedor de Privacidad */
+.privacy-container {
+    max-width: 900px;
+    margin: 10rem auto;
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Contenido de Privacidad */
+.privacy-content {
+    padding: 1rem;
+}
+
+.privacy-content h1 {
+    font-size: 2.5rem;
+    color: #2E7D32;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.privacy-content .last-updated {
+    font-size: 0.9rem;
+    color: #555;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.privacy-content h2 {
+    font-size: 1.8rem;
+    color: #2E7D32;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    border-bottom: 2px solid #C8E6C9;
+    padding-bottom: 0.3rem;
+}
+
+.privacy-content h3 {
+    font-size: 1.5rem;
+    color: #388E3C;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.privacy-content p {
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.privacy-content ul {
+    list-style-type: disc;
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.privacy-content li {
+    margin-bottom: 0.5rem;
+}
+
+/* Sección de Información de Contacto */
+.privacy-content .contact-info ul {
+    list-style: none;
+    padding: 0;
+}
+
+.privacy-content .contact-info li {
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+/* Enlaces (por si se agregan en algún lugar) */
+a {
+    color: #2E7D32;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: #388E3C;
+}
+
+/* Media Queries para Responsividad */
+@media (max-width: 768px) {
+    .privacy-container {
+        margin: 1rem;
+        padding: 1.5rem;
+    }
+    
+    .privacy-content h1 {
+        font-size: 2rem;
+    }
+    
+    .privacy-content h2 {
+        font-size: 1.5rem;
+    }
+    
+    .privacy-content p,
+    .privacy-content li {
+        font-size: 1rem;
+    }
+}

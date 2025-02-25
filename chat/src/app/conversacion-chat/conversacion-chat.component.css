@@ -1,0 +1,87 @@
+/* ====== ESTILOS PARA LA CONVERSACIÓN ====== */
+
+.chat-window {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  width: 80%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 20%;
+}
+
+/* Encabezado de la conversación */
+.chat-header {
+  padding: 15px;
+  border-bottom: 1px solid #ddd;
+  background: #4ed458;
+  color: white;
+  text-align: center;
+}
+
+/* Área de mensajes */
+.chat-messages {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Mensajes en el chat */
+.message {
+  padding: 10px 15px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  max-width: 60%;
+}
+
+/* Mensajes recibidos (izquierda) */
+.received {
+  background: #e5e5ea;
+  align-self: flex-start;
+}
+
+/* Mensajes enviados (derecha) */
+.sent {
+  background: #4ed458;
+  color: white;
+  align-self: flex-end;
+}
+
+/* Área de entrada de mensajes */
+.chat-input {
+  display: flex;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+  background: #f0f2f5;
+}
+
+/* Campo de texto */
+.chat-input input {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 20px;
+  outline: none;
+}
+
+/* Botón de envío */
+.chat-input button {
+  background: #4ed458;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: background 0.3s;
+}
+
+/* Efecto hover */
+.chat-input button:hover {
+  background: #29702e;
+}

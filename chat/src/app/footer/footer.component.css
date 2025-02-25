@@ -1,6 +1,129 @@
-footer {
-    background-color: #2D2D2D;
-    color: white;
-    padding: 2rem;
-    text-align: center;
+/* footer.component.scss */
+*{
+  padding: 0;
+  margin: 0;
 }
+.footer {
+    background-color: #122711;
+    color: #ffffff;
+    padding: 3rem 0;
+  }
+  
+  .footer-container {
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  .footer-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 2rem;
+  }
+  
+  @media (min-width: 768px) {
+    .footer-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  
+  .footer-column {
+    margin-bottom: 1rem;
+  }
+  
+  .footer-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+  
+  .footer-subtitle {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  
+  .company-description {
+    color: #9CA3AF;
+    margin-bottom: 1rem;
+  }
+  
+  .social-links {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .social-link {
+    color: #9CA3AF;
+    transition: color 0.3s ease;
+  }
+  
+  .social-link:hover {
+    color: #ffffff;
+  }
+  
+  .footer-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .footer-list li {
+    margin-bottom: 0.5rem;
+  }
+  
+  .footer-link {
+    color: #9CA3AF;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .footer-link:hover {
+    color: #ffffff;
+  }
+  
+  .contact-info {
+    color: #9CA3AF;
+    line-height: 1.5;
+  }
+  
+  .footer-bottom {
+    border-top: 1px solid #1F2937;
+    margin-top: 2rem;
+    padding-top: 2rem;
+  }
+  
+  .footer-bottom-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  @media (min-width: 768px) {
+    .footer-bottom-content {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+  
+  .copyright {
+    color: #9CA3AF;
+    font-size: 0.875rem;
+  }
+  
+  .legal-links {
+    display: flex;
+    gap: 1.5rem;
+  }
+  
+  .legal-link {
+    color: #9CA3AF;
+    font-size: 0.875rem;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .legal-link:hover {
+    color: #ffffff;
+  }

@@ -1,15 +1,10 @@
 import { Component } from '@angular/core';
 import { HeaderComponent } from "../header/header.component";
-import { FooterComponent } from "../footer/footer.component";
-import { AuthService } from '../services/auth.service';
-import { FormsModule } from '@angular/forms';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Router } from '@angular/router';
+
+
 @Component({
   selector: 'app-inicio-sesion',
-  imports: [HeaderComponent, FooterComponent,FormsModule, HttpClientModule],
-  providers: [AuthService],
-  standalone: true,
+  imports: [HeaderComponent],
   templateUrl: './inicio-sesion.component.html',
   styleUrl: './inicio-sesion.component.css'
 })
