@@ -9,5 +9,6 @@ import { HeaderComponent } from "../header/header.component";
   styleUrl: './registro.component.css'
 })
 export class RegistroComponent {
+  
 
 }

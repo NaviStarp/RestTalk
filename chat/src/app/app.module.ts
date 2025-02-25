@@ -10,17 +10,17 @@ import { ConversacionChatComponent } from './conversacion-chat/conversacion-chat
 
 @NgModule({
   declarations: [
-    AppComponent,
-    ChatComponent,
-    UsuariosChatComponent, // Declara el componente
-    ConversacionChatComponent // Declara el componente
+
   ],
   imports: [
+    ChatComponent,
+    ConversacionChatComponent,
     BrowserModule,
     FormsModule,
-    CommonModule
+    CommonModule,
+    AppComponent,
+    UsuariosChatComponent,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: []
 })
 export class AppModule { }
