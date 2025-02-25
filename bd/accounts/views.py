@@ -89,15 +89,19 @@ class LoginView(APIView):
         return Response({"error": "Method not allowed"}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
     def post(self, request):
-        username = request.data.get('username').lower()
+        username = request.data.get('username').lower() # Todos los usuarios se guardan en minusculas
         password = request.data.get('password')
+        print(username, password)
         user = authenticate(username=username, password=password)
         print(user)
         if user:
             login(request, user)
-            token = Token.objects.get_or_create(user=user)
-            # return Response({"token": token.key, "user_id": user.id, "username": user.username}) Ahora que sabemos que funciona, voy a redirigir a otro sitio
-            return Response({"token": token.key, "user_id": user.id, "username": user.username})
+            token, created = Token.objects.get_or_create(user=user)  
+            return Response({
+                "token": token.key,  
+                "user_id": user.id, 
+                "username": user.username
+            })
         return Response({"error": "Invalid credentials", "contra": password, "usuario": username}, status=status.HTTP_400_BAD_REQUEST)
 
 
