@@ -26,7 +26,7 @@ export class InicioSesionComponent {
   
   isLoading = false;
   errorMessage = '';
-  
+
   login(): void {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
@@ -61,7 +61,7 @@ export class InicioSesionComponent {
         }
         
         // Navegar a la ruta protegida
-        this.router.navigate(['/privacidad']);
+        this.router.navigate(['/prueba']);
       }),
       catchError(error => {
         console.error('Error detallado:', error);
