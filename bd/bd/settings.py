@@ -36,7 +36,8 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']  # Cambiar para despues
 
 CSRF_TRUSTED_ORIGINS = [
-    "http://192.168.3.180:4200",  # IP del frontend
+    "http://192.168.3.180:4200",  # IP Sebas
+    "http://192.168.3.183:4200",  # IP Ivan
     "http://localhost:4200",      # Para desarrollo local
 ]
 
@@ -113,7 +114,8 @@ REST_FRAMEWORK = {
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:4200",
-    "http://192.168.3.180:4200",  # IP del frontend
+    "http://192.168.3.180:4200",  # IP Sebas
+    "http://192.168.3.182:4200",  # IP Ivan
 ]
 
 

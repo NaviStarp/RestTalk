@@ -1,33 +1,53 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+
+interface Chat {
+  id: number;
+  chat_type: string;
+  name: string;
+  created_at: string;
+  updated_at: string;
+  users: number[];
+}
+
+interface Message {
+  id: number;
+  chat: number;
+  sender: number;
+  text: string;
+  created_at: string;
+  updated_at: string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://192.168.3.180:8000/api/login/'; // URL del backend
-
+  private apiUrl = 'http://192.168.3.182:8000/api/v1';
+  
   constructor(private http: HttpClient) {}
 
-  login(username: string, password: string): Observable<any> {
-    const csrfToken = this.getCookie('csrftoken'); // Obtiene el token CSRF de las cookies
-    return this.http.post(
-      this.apiUrl,
-      { username, password },
-      { headers: { 'X-CSRFToken': csrfToken } }
+  private getToken(): string | null {
+    return localStorage.getItem('authToken');
+  }
+
+  get_messages(): Observable<Message[]> {
+    console.log('Obteniendo mensajes...');
+    return this.http.get<Message[]>(`${this.apiUrl}/messages/get`, {
+      headers: { Authorization: `Token ${this.getToken()}` }
+    }).pipe(
+      tap(response => console.log('Mensajes obtenidos:', response))
     );
   }
 
-  private getCookie(name: string): string {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) {
-      const part = parts.pop();
-      if (part) {
-        return part.split(';').shift() || '';
-      }
-    }
-    return '';
+  get_chats(): Observable<Chat[]> {
+    console.log('Obteniendo chats...');
+    return this.http.get<Chat[]>(`${this.apiUrl}/chats/get`, {
+      headers: { Authorization: `Token ${this.getToken()}` }
+    }).pipe(
+      tap(response => console.log('Chats obtenidos:', response))
+    );
   }
 }
