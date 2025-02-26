@@ -1,5 +1,10 @@
 /* ====== ESTILOS PARA LA LISTA DE USUARIOS ====== */
 
+* {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  scrollbar-width: none; /* Firefox */
+}
+
 .chat-list {
   width: 30%;
   background: #fff;
@@ -7,12 +12,17 @@
   overflow-y: auto;
   padding: 20px;
   width: 18%;
-  height: 100%;
+  height: 90vh;
   position: absolute;
   top: 0;
   right: 70%;
   left: 0%;
   z-index: 1;
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.chat-list::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, and Opera */
 }
 
 /* Estilo de cada usuario en la lista */
