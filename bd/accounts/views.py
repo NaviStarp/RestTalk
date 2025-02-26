@@ -119,7 +119,7 @@ class RegisterView(APIView):
             user.set_password(request.data["password"])
             user.is_active = True
             user.save()
-            token = Token.objects.get_or_create(user=user)            
+            token , _ = Token.objects.get_or_create(user=user)            
             return Response({
                 "token": token.key,
                 "user_id": user.id,
