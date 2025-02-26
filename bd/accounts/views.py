@@ -11,7 +11,9 @@ from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 from dj_rest_auth.registration.views import SocialLoginView
 from rest_framework.permissions import AllowAny
-
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
+from django.contrib.auth.models import User
 from urllib.parse import urljoin
 import requests
 from .serializers import UserSerializer
@@ -138,3 +140,15 @@ class LoginPage(View):
                 "google_client_id": settings.GOOGLE_OAUTH_CLIENT_ID
             },
         )
+class getAllUsersWithToken(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        print("hola")
+        user = request.user
+        users = User.objects.all()
+        serializer = UserSerializer(users, many=True)
+        # Extraemos los nombres
+        names = [user["username"] for user in serializer.data]
+        names.pop(names.index(user.username)) # Eliminamos el nombre del usuario que hace la peticion
+        return Response({"request_user": user.username, "users": names}, status=status.HTTP_200_OK)

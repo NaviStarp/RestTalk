@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from '../services/auth.service';
+import { FormsModule } from '@angular/forms';
 
 interface Chat {
   id: number;
@@ -24,14 +25,14 @@ interface Message {
 @Component({
   selector: 'app-prueba',
   standalone: true,
-  imports: [CommonModule, HttpClientModule],
+  imports: [CommonModule, HttpClientModule,FormsModule],
   templateUrl: './prueba.component.html',
   styleUrl: './prueba.component.css'
 })
 export class PruebaComponent implements OnInit {
   messages: Message[] = []; // Definir el tipo explícitamente
   chats: Chat[] = []; // Definir el tipo explícitamente
-
+  message = '';
   constructor(private auth: AuthService) {}
 
   get token() {
@@ -55,6 +56,22 @@ export class PruebaComponent implements OnInit {
     this.auth.get_chats().subscribe(
       (response: Chat[]) => this.chats = response, // Asegurarse de que se asigne un array de `Chat`
       error => console.error('Error al obtener chats:', error)
+    );
+    this.getUsernames();
+  }
+  sendMessage() {
+    this.auth.send_message(this.message, 1).subscribe(
+      (response: Message) => {
+        this.messages.push(response); // Asegurarse de que se agregue un `Message` al array
+        this.message = '';
+      },
+      error => console.error('Error al enviar mensaje:', error)
+    );
+  }
+  getUsernames() {
+    this.auth.get_usernames().subscribe(
+      (response: string[]) => console.log('Usernames obtenidos:', response), // Asegurarse de que se reciba un array de `string`
+      error => console.error('Error al obtener usernames:', error)
     );
   }
 }

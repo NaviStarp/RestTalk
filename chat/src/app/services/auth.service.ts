@@ -25,7 +25,7 @@ interface Message {
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://192.168.3.182:8000/api/v1';
+  private apiUrl = 'http://localhost:8000/api/v1';
   
   constructor(private http: HttpClient) {}
 
@@ -35,7 +35,7 @@ export class AuthService {
 
   get_messages(): Observable<Message[]> {
     console.log('Obteniendo mensajes...');
-    return this.http.get<Message[]>(`${this.apiUrl}/messages/get`, {
+    return this.http.get<Message[]>(`${this.apiUrl}/messages/get/`, {
       headers: { Authorization: `Token ${this.getToken()}` }
     }).pipe(
       tap(response => console.log('Mensajes obtenidos:', response))
@@ -44,10 +44,31 @@ export class AuthService {
 
   get_chats(): Observable<Chat[]> {
     console.log('Obteniendo chats...');
-    return this.http.get<Chat[]>(`${this.apiUrl}/chats/get`, {
+    return this.http.get<Chat[]>(`${this.apiUrl}/chats/get/`, {
       headers: { Authorization: `Token ${this.getToken()}` }
     }).pipe(
       tap(response => console.log('Chats obtenidos:', response))
     );
   }
+
+  send_message(message: string, chat_id: number): Observable<Message> {
+    console.log('Enviando mensaje...');
+    return this.http.post<Message>(`${this.apiUrl}/messages/send/`, {
+      text: message,
+      chat: chat_id
+    }, {
+      headers: { Authorization: `Token ${this.getToken()}` }
+    }).pipe(
+      tap(response => console.log('Mensaje enviado:', response))
+    );
+  }
+  get_usernames(): Observable<string[]> {
+    console.log('Obteniendo usernames...');
+    return this.http.get<string[]>(`${this.apiUrl}/users/get/`, {
+      headers: { Authorization: `Token ${this.getToken()}` }
+    }).pipe(
+      tap(response => console.log('Usernames obtenidos:', response))
+    );
+  }
+
 }

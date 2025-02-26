@@ -39,6 +39,7 @@ CSRF_TRUSTED_ORIGINS = [
     "http://192.168.3.180:4200",  # IP Sebas
     "http://192.168.3.183:4200",  # IP Ivan
     "http://localhost:4200",      # Para desarrollo local
+    "http://localhost:8000",      # Para desarrollo local
 ]
 
 
@@ -114,6 +115,7 @@ REST_FRAMEWORK = {
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:4200",
+    "http://localhost:8000",
     "http://192.168.3.180:4200",  # IP Sebas
     "http://192.168.3.182:4200",  # IP Ivan
 ]
