@@ -69,6 +69,7 @@
     /* Sección del Equipo */
     .team {
       /* Flex para que los miembros aparezcan en una sola línea */
+      justify-content: center;
       display: flex;
       flex-wrap: nowrap;          /* No se permite que hagan salto de línea */
       overflow-x: auto;          /* Permite desplazamiento horizontal si no cabe en la pantalla */
