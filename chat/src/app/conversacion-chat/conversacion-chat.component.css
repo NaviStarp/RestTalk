@@ -119,4 +119,15 @@
 /* Efecto hover */
 .chat-input button:hover {
   background: #29702e;
+<<<<<<< HEAD
 }
+=======
+}
+
+/*Fondo del chat*/
+.fondo-imagen {
+  background-image: url('assets/images/fondi_negro.png'); /* Ruta de la imagen */
+  background-size: cover;
+  background-position: center;
+}
+>>>>>>> e1abaa5ece9d58c6be75331e5f833db7f2da08bb

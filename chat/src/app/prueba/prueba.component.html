@@ -1,3 +1,23 @@
-<p>Token : {{ token }} </p>
-<p>User id : {{userId}} </p>
-<p>Username : {{username}}</p>
+<p>Token: {{ token }}</p>
+<p>User ID: {{ userId }}</p>
+<p>Username: {{ username }}</p>
+
+<ul>
+  <li *ngFor="let chat of chats">
+    <p>Chat ID: {{ chat.id }}</p>
+    <p>Chat Type: {{ chat.chat_type }}</p>
+    <p>Name: {{ chat.name || 'Sin nombre' }}</p>
+    
+    <!-- Verificamos si hay mensajes para este chat -->
+    <div *ngIf="chats && chats.length > 0">
+      <p>Mensajes:</p>
+      <ul>
+        <li *ngFor="let message of messages">
+          <p>{{ message.sender }}: {{ message.text }}</p>
+        </li>
+      </ul>
+    </div>
+    <p *ngIf="!chats || chats.length < 1">No hay mensajes</p>
+  </li>
+</ul>
+<p *ngIf="!chats || chats.length === 0">No hay chats disponibles</p>
