@@ -7,4 +7,13 @@ import { Component } from '@angular/core';
 })
 export class UsuariosChatComponent {
   // Lógica del componente
+
+  clickCheckbox(event: Event) {
+    const checkbox = event.target as HTMLInputElement;
+    if (checkbox.checked) {
+      console.log("check");
+    } else {
+      console.log("uncheck");
+    }
+  }
 }
