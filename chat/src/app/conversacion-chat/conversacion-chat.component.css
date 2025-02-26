@@ -85,3 +85,10 @@
 .chat-input button:hover {
   background: #29702e;
 }
+
+/*Fondo del chat*/
+.fondo-imagen {
+  background-image: url('assets/images/fondi_negro.png'); /* Ruta de la imagen */
+  background-size: cover;
+  background-position: center;
+}
