@@ -36,6 +36,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']  # Cambiar para despues
 
 CSRF_TRUSTED_ORIGINS = [
+    "http://192.168.1.58:4200",  # IP de casa Sebas
     "http://192.168.3.180:4200",  # IP Sebas
     "http://192.168.3.183:4200",  # IP Ivan
     "http://localhost:4200",      # Para desarrollo local

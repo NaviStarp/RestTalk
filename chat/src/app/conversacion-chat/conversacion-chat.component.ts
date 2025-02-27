@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { CambiarColorService } from '../services/cambiar-color.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -8,19 +7,7 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./conversacion-chat.component.css'],
   imports: [CommonModule]
 })
-export class ConversacionChatComponent implements OnInit {
-  imagenFondo = 'C:\Users\DAM\Documents\DessarolloDeInterfaces\RestTalk\chat\src\assets\images\fondi.jpg';
+export class ConversacionChatComponent {
 
-  constructor(private cambiarColorService: CambiarColorService) { }
 
-  ngOnInit() {
-    this.cambiarColorService.fondo$.subscribe(estilo => {
-      this.imagenFondo = estilo.imagen;
-    });
-  }
-
-  // Cambiar solo la imagen de fondo
-  cambiarImagen(imagen: string) {
-    this.cambiarColorService.cambiarImagen(imagen);
-  }
 }

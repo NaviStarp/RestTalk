@@ -52,7 +52,7 @@ export class RegistroComponent {
     }
     
     this.http.post<any>(
-      'http://192.168.3.182:8000/api/v1/register/',
+      'http://127.0.0.1:8000/api/v1/register/',
       { username, password, email }
     ).pipe(
       tap(response => {

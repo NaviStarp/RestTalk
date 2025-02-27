@@ -44,7 +44,8 @@ export class InicioSesionComponent {
     console.log('Enviando credenciales:', { username, password }); // Depuración
     
     this.http.post<any>(
-      'http://192.168.3.182:8000/api/v1/login/', 
+      'http://127.0.0.1:8000/api/v1/login/', 
+      
       { username, password }
     ).pipe(
       tap(response => {

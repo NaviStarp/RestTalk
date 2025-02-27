@@ -1,7 +1,8 @@
 /* ====== ESTILOS PARA LA LISTA DE USUARIOS ====== */
 
 * {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
   scrollbar-width: none; /* Firefox */
 }
 
@@ -12,7 +13,8 @@
   overflow-y: auto;
   padding: 20px;
   width: 18%;
-  height: 90vh;
+  /* Perfección ↓↓↓ (NO TOCAR) */
+  height: 95.75%;
   position: absolute;
   top: 0;
   right: 70%;
@@ -63,7 +65,7 @@
   color: #555;
 }
 
-/*### Todos esto es para el switch ###*/
+/*################ Todos esto es para el switch ###################*/
 .switch {
   position: relative;
   display: inline-block;
@@ -125,3 +127,146 @@ input:checked + .slider:before {
 }
 
 /* ################################### */
+
+/* modo claro */
+.light-mode {
+  background-color: #f0f0f0; /* Color claro */
+  color: #000;
+}
+
+/* modo oscuro */
+.dark-mode {
+  background-color: #333; /* Color oscuro */
+  color: #fff;
+}
+
+/* ############### Estilo del select #################### */
+:root {
+  --primary-color: #4361ee;
+  --primary-light: #e9efff;
+  --text-color: #333;
+  --bg-color: #fff;
+  --border-color: #ddd;
+  --error-color: #e63946;
+  --success-color: #2a9d8f;
+  --border-radius: 8px;
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --transition: all 0.3s ease;
+}
+
+.form-container {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  padding: 30px;
+  width: 50%;
+  max-width: 400px;
+  transition: var(--transition);
+}
+
+h2 {
+  margin-top: 0;
+  color: var(--primary-color);
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.theme-toggle {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.theme-toggle label {
+  margin-right: 10px;
+  margin-bottom: 0;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.custom-select-container {
+  position: relative;
+}
+
+.custom-select {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 16px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.custom-select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+.select-arrow {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  width: 12px;
+  height: 12px;
+  border-left: 2px solid var(--text-color);
+  border-bottom: 2px solid var(--text-color);
+  transform: translateY(-70%) rotate(-45deg);
+  transition: var(--transition);
+}
+
+.custom-select-container:hover .select-arrow {
+  border-color: var(--primary-color);
+}
+
+.submit-btn {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  width: 100%;
+}
+
+.submit-btn:hover {
+  background-color: #2541c9;
+  transform: translateY(-2px);
+}
+
+.submit-btn:active {
+  transform: translateY(0);
+}
+
+.selected-option {
+  margin-top: 20px;
+  padding: 12px;
+  background-color: var(--primary-light);
+  border-radius: var(--border-radius);
+}
+
+@media (max-width: 480px) {
+  .form-container {
+    padding: 20px;
+  }
+}

@@ -1,21 +1,31 @@
-<div class="chat-list">
+<div class="chat-list" [ngClass]="{ 'dark-mode': isDarkMode, 'light-mode': !isDarkMode }">
+    <!-- Lista de usuarios -->
     <div class="chat-item">
-        <img src="user1.jpg" alt="User 1">
+        <img src="user1.jpg" alt="Usuario Juan Pérez">
         <div class="chat-info">
             <h4>Juan Pérez</h4>
-            <br>
         </div>
     </div>
+
     <div class="chat-item">
-        <img src="user2.jpg" alt="User 2">
+        <img src="user2.jpg" alt="Usuario María López">
         <div class="chat-info">
             <h4>María López</h4>
-            <br>
         </div>
     </div>
-    <label class="switch">
-        <input type="checkbox" id="ToggleswitchId" (change)="clickCheckbox($event)">
-        <span class="slider round"></span>
-    </label>
+    <form action="#">
+        <select name="usuarios" id="chats_select">
+            <!-- Las opciones se llenarán dinámicamente -->
+        </select>
+        <input type="submit" value="Enviar" />
+    </form>
 
+    <!-- Control de tema -->
+    <div class="theme-toggle">
+        <p>Cambiar modo</p>
+        <label class="switch" aria-label="Cambiar entre modo claro y oscuro">
+            <input type="checkbox" id="themeToggle" (change)="clickCheckbox($event)">
+            <span class="slider round"></span>
+        </label>
+    </div>
 </div>
