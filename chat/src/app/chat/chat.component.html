@@ -1,91 +1,159 @@
 <div class="chat-container">
-    <!-- Panel izquierdo: Lista de contactos -->
-    <div class="contacts-panel">
-        <div class="user-header">
-            <div class="avatar">
-                <img src="" alt="Usuario">
-            </div>
-            <div class="header-icons">
-                <i class="material-icons">donut_large</i>
-                <i class="material-icons">chat</i>
-                <i class="material-icons">more_vert</i>
-            </div>
+  <!-- Panel izquierdo: Lista de contactos -->
+  <div class="contacts-panel">
+    <div class="user-header">
+      <div class="avatar">
+        <img src="/api/placeholder/40/40" alt="Usuario">
+      </div>
+      <div class="header-icons">
+        <i class="material-icons" (click)="openAddChatModal()">add</i>
+        <i class="material-icons">chat</i>
+        <i class="material-icons">more_vert</i>
+      </div>
+    </div>
+    <div class="search-bar">
+      <div class="search-wrapper">
+        <i class="material-icons">search</i>
+        <input type="text" placeholder="Buscar o empezar un chat nuevo">
+      </div>
+    </div>
+    <div class="contacts-list">
+      <div class="contact-item"
+           *ngFor="let chat of chats"
+           (click)="select_chat(chat.id)"
+           [class.active]="current_chat === chat.id">
+        <div class="contact-avatar">
+          <img src="/api/placeholder/48/48" alt="{{ chat.name }}">
         </div>
-
-        <div class="search-bar">
-            <div class="search-wrapper">
-                <i class="material-icons">search</i>
-                <input type="text" placeholder="Buscar o empezar un chat nuevo">
-            </div>
+        <div class="contact-info">
+          <div class="contact-name">{{ chat.name }}</div>
+          <div class="contact-last-message">Último mensaje...</div>
         </div>
-
-        <div class="contacts-list">
-            <div class="contact-item">
-                <div class="contact-avatar">
-                    <img src="" alt="Contacto 1">
-                </div>
-                <div class="contact-info">
-                    <div class="contact-name">Contacto 1</div>
-                    <div class="contact-last-message">Último mensaje</div>
-                </div>
-                <div class="contact-time">12:00</div>
-            </div>
-            <div class="contact-item">
-                <div class="contact-avatar">
-                    <img src="" alt="Contacto 2">
-                </div>
-                <div class="contact-info">
-                    <div class="contact-name">Contacto 2</div>
-                    <div class="contact-last-message">Último mensaje</div>
-                </div>
-                <div class="contact-time">12:30</div>
-            </div>
+        <div class="contact-time">{{ chat.updated_at | date:'shortTime' }}</div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Panel derecho: Conversación -->
+  <div class="conversation-panel">
+    <div class="conversation-header" *ngIf="current_chat !== null">
+      <div class="contact-info">
+        <div class="avatar">
+          <img src="/api/placeholder/40/40" alt="Contacto">
         </div>
+        <div class="contact-details">
+          <div class="contact-name">{{ getCurrentChatName() }}</div>
+          <div class="contact-status">
+            <span class="status-dot" [ngClass]="{'online': isContactOnline()}"></span>
+            {{ isContactOnline() ? 'En línea' : 'Último acceso ' + getLastSeen() }}
+          </div>
+        </div>
+      </div>
+      <div class="header-icons">
+        <i class="material-icons" >search</i>
+        <i class="material-icons">attach_file</i>
+        <i class="material-icons">more_vert</i>
+      </div>
     </div>
 
-    <!-- Panel derecho: Conversación -->
-    <div class="conversation-panel">
-        <div class="conversation-header">
-            <div class="contact-info">
-                <div class="avatar">
-                    <img src="" alt="Contacto 1">
-                </div>
-                <div class="contact-details">
-                    <div class="contact-name">Contacto 1</div>
-                    <div class="contact-status">En línea</div>
-                </div>
-            </div>
-            <div class="header-icons">
-                <i class="material-icons">search</i>
-                <i class="material-icons">attach_file</i>
-                <i class="material-icons">more_vert</i>
-            </div>
-        </div>
-
-        <div class="messages-container">
-            <div class="message my-message">
-                <div class="message-content">
-                    Hola, ¿cómo estás?
-                    <span class="message-time">12:01</span>
-                    <span class="message-status">
-                        <i class="material-icons blue">done_all</i>
-                    </span>
-                </div>
-            </div>
-            <div class="message their-message">
-                <div class="message-content">
-                    ¡Hola! Estoy bien, gracias.
-                    <span class="message-time">12:02</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="message-input">
-            <i class="material-icons">emoji_emotions</i>
-            <i class="material-icons">attach_file</i>
-            <input type="text" placeholder="Escribe un mensaje">
-            <i class="material-icons mic">mic</i>
-            <i class="material-icons send">send</i>
-        </div>
+    <div *ngIf="current_chat === null" class="select-chat-prompt">
+      <i class="material-icons">chat</i>
+      <p>Selecciona un chat para comenzar a conversar</p>
+      <small>Tus mensajes están cifrados de extremo a extremo</small>
     </div>
+
+    <div *ngIf="current_chat !== null" class="messages-container" #messagesContainer>
+      <div *ngIf="current_chat_messages.length === 0" class="no-messages">
+        <i class="material-icons">question_answer</i>
+        <p>No hay mensajes en este chat</p>
+        <small>¡Envía el primer mensaje para comenzar!</small>
+      </div>
+
+      <ng-container *ngFor="let msg of current_chat_messages; let i = index">
+        <!-- Separador de fecha si es necesario -->
+        <div *ngIf="shouldShowDateSeparator(i)" class="date-separator">
+          {{ formatDate(msg.created_at) }}
+        </div>
+
+        <!-- Indicador de mensajes no leídos -->
+        <div *ngIf="isFirstUnreadMessage(msg)" class="unread-messages-indicator">
+          Mensajes nuevos
+        </div>
+        
+        <!-- Mensaje individual -->
+        <div 
+          class="message"
+          [class.my-message]="isMyMessage(msg)"
+          [class.their-message]="!isMyMessage(msg)"
+          [class.sequential]="isSequentialMessage(i)"
+          [class.message-new]="isNewMessage(msg)"
+          [class.message-with-image]="hasImage(msg)">
+          
+          <div class="message-content">
+            <!-- Nombre del remitente para mensajes grupales -->
+            <div *ngIf="!isMyMessage(msg) && isGroupChat() && !isSequentialMessage(i)" class="sender-name">
+              {{ getSenderName(msg.sender) }}
+            </div>
+
+            <!-- Contenido de imagen si existe -->
+            <div *ngIf="hasImage(msg)" class="image-preview">
+              <img [src]="msg.image_url || '/api/placeholder/200/150'" 
+                   alt="Imagen compartida"
+                   (click)="openImageViewer(msg.image_url)">
+            </div>
+            
+            <!-- Texto del mensaje -->
+            <span [innerHTML]="formatMessageText(msg.text)"></span>
+            
+            <!-- Hora y estado -->
+            <span class="message-time">{{ msg.created_at | date:'HH:mm' }}</span>
+            <span *ngIf="isMyMessage(msg)" class="message-status">
+              <i class="material-icons" [ngClass]="{'blue': isMessageRead(msg)}">
+                {{ isMessageDelivered(msg) ? 'done_all' : 'done' }}
+              </i>
+            </span>
+          </div>
+        </div>
+      </ng-container>
+      
+      <!-- Indicador de escribiendo -->
+      <div *ngIf="isTyping()" class="typing-indicator">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+
+    <div *ngIf="current_chat !== null" class="message-input">
+      <i class="material-icons emoji-btn">sentiment_satisfied_alt</i>
+      <input 
+        type="text" 
+        [(ngModel)]="message" 
+        placeholder="Escribe un mensaje..." 
+        (keyup.enter)="send_message()"
+        (focus)="markAllAsRead()">
+      <i *ngIf="message.trim() === ''" class="material-icons attach-btn">attach_file</i>
+      <button [disabled]="message.trim() === ''" (click)="send_message()">
+        <i class="material-icons">{{ message.trim() === '' ? 'mic' : 'send' }}</i>
+      </button>
+    </div>
+  </div>
+
+<div class="add-chat-modal" *ngIf="showAddChatModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>Crear un nuevo chat</h3>
+      <i class="material-icons close-btn" (click)="closeAddChatModal()">close</i>
+    </div>
+    <div class="modal-body">
+      <div class="search-bar
+      ">
+        <div class="search-wrapper">
+          <i class="material-icons">search</i>
+          <input type="text" placeholder="Buscar un contacto">
+        </div>
+        <div *ngFor="let item of users"></div>
+
+</div>
+
 </div>

@@ -38,26 +38,47 @@ class GetChatView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
 class GetMessageView(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
     
     def get(self, request, *args, **kwargs):
         user = request.user
-        messages = Message.objects.filter(sender=user)
+        chat_id = request.query_params.get('chat_id')
+        print("hola")
+        print(chat_id)
+        # Obtener todos los mensajes del chat, no solo los enviados por el usuario
+        if chat_id:
+            try:
+                # Convertir chat_id a entero antes de usarlo
+                chat_id = int(chat_id)
+                messages = Message.objects.filter(chat_id=chat_id)
+                print(messages)
+            except ValueError:
+                # Si chat_id no es un número válido, devolver error
+                return Response(
+                    {"error": "El parámetro chat_id debe ser un número válido"}, 
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+        else:
+            # Si no se proporciona chat_id, obtener todos los mensajes relacionados con el usuario
+            from django.db.models import Q
+            messages = Message.objects.filter(
+                Q(sender=user) | Q(chat__participants=user)
+            ).distinct()
+            
         serializer = MessageSerializer(messages, many=True)
+        print(serializer.data)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
     def post(self, request, *args, **kwargs):
-        data = request.data
+        data = request.data.copy()  # Crear una copia para modificar
         data['sender'] = request.user.id
         serializer = MessageSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 class CreateChatView(APIView):
     authentication_classes = [TokenAuthentication]

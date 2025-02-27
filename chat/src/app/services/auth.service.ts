@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
+import { afterNextRender, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Observable, firstValueFrom } from 'rxjs';
+import { tap, map } from 'rxjs/operators';
 
 interface Chat {
   id: number;
@@ -25,23 +25,43 @@ interface Message {
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8000/api/v1';
+  private apiUrl = 'http://192.168.3.182:8000/api/v1';
   
-  constructor(private http: HttpClient) {}
-
+  constructor(private http: HttpClient) { }
+  
   private getToken(): string | null {
     return localStorage.getItem('authToken');
   }
-
-  get_messages(): Observable<Message[]> {
-    console.log('Obteniendo mensajes...');
-    return this.http.get<Message[]>(`${this.apiUrl}/messages/get/`, {
-      headers: { Authorization: `Token ${this.getToken()}` }
-    }).pipe(
-      tap(response => console.log('Mensajes obtenidos:', response))
-    );
+  
+  get_messages(chat_id: number, callback: (messages: Message[]) => void): void {
+    this.http.get<Message[]>(`${this.apiUrl}/messages/get/`, {
+      headers: { Authorization: `Token ${this.getToken()}` },
+      params: { chat_id: chat_id.toString() }
+    }).subscribe({
+      next: (response: Message[]) => {
+        const filteredMessages = response.filter(message => message.chat === chat_id);
+        callback(filteredMessages);
+      },
+      error: (error) => {
+        console.error('Error al obtener mensajes:', error);
+        callback([]);
+      }
+    });
   }
-
+  
+  // Método asíncrono que devuelve Promise<Message[]>
+  async get_messages_array(chat_id: number): Promise<Message[]> {
+    const messages = await firstValueFrom(
+      this.http.get<Message[]>(`${this.apiUrl}/messages/get/`, {
+        headers: { Authorization: `Token ${this.getToken()}` }
+        
+      })
+    );
+    return messages.filter(message => message.chat === chat_id);
+  }
+  
+ 
+  
   get_chats(): Observable<Chat[]> {
     console.log('Obteniendo chats...');
     return this.http.get<Chat[]>(`${this.apiUrl}/chats/get/`, {
@@ -50,18 +70,22 @@ export class AuthService {
       tap(response => console.log('Chats obtenidos:', response))
     );
   }
-
-  send_message(message: string, chat_id: number): Observable<Message> {
+  
+  send_message(Messaje:Message): Observable<Message> {
     console.log('Enviando mensaje...');
     return this.http.post<Message>(`${this.apiUrl}/messages/send/`, {
-      text: message,
-      chat: chat_id
+      chat: Messaje.chat,
+      sender: Messaje.sender,
+      text: Messaje.text,
+      created_at: Messaje.created_at,
+      updated_at: Messaje.updated_at
     }, {
       headers: { Authorization: `Token ${this.getToken()}` }
     }).pipe(
       tap(response => console.log('Mensaje enviado:', response))
     );
   }
+  
   get_usernames(): Observable<string[]> {
     console.log('Obteniendo usernames...');
     return this.http.get<string[]>(`${this.apiUrl}/users/get/`, {
@@ -70,5 +94,4 @@ export class AuthService {
       tap(response => console.log('Usernames obtenidos:', response))
     );
   }
-
 }

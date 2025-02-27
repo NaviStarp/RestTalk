@@ -48,10 +48,7 @@ export class PruebaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.auth.get_messages().subscribe(
-      (response: Message[]) => this.messages = response, // Ahora TypeScript reconoce el tipo correctamente
-      error => console.error('Error al obtener mensajes:', error)
-    );
+  
 
     this.auth.get_chats().subscribe(
       (response: Chat[]) => this.chats = response, // Asegurarse de que se asigne un array de `Chat`
@@ -59,15 +56,7 @@ export class PruebaComponent implements OnInit {
     );
     this.getUsernames();
   }
-  sendMessage() {
-    this.auth.send_message(this.message, 1).subscribe(
-      (response: Message) => {
-        this.messages.push(response); // Asegurarse de que se agregue un `Message` al array
-        this.message = '';
-      },
-      error => console.error('Error al enviar mensaje:', error)
-    );
-  }
+ 
   getUsernames() {
     this.auth.get_usernames().subscribe(
       (response: string[]) => console.log('Usernames obtenidos:', response), // Asegurarse de que se reciba un array de `string`

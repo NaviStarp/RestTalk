@@ -52,7 +52,7 @@ export class RegistroComponent {
     }
     
     this.http.post<any>(
-      'http://127.0.0.1:8000/api/v1/register/',
+      'http://192.168.3.182:8000/api/v1/register/',
       { username, password, email }
     ).pipe(
       tap(response => {
@@ -65,7 +65,7 @@ export class RegistroComponent {
         if (response.username) {
           localStorage.setItem('username', response.username);
         }
-        this.router.navigate(['/prueba']);
+        this.router.navigate(['/chat']);
       }),
       catchError(error => {
         if (error.error) {

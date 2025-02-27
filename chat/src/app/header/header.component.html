@@ -7,9 +7,17 @@
         <img src="assets/images/menu-icon.svg" alt="Menú">
     </button>
     <div class="nav-links" [ngClass]="{'open': isMenuOpen}">
-        <a href="/login">Iniciar sesión</a>
-        <a href="/registro">Crear cuenta</a>
-        <a href="/privacidad">Privacidad</a>
-        <a href="/sobreNosotros">Sobre nosotros</a>
+        <ng-container *ngIf="isLogged; else guestLinks">
+            <a href="/chat" target="_blank">Chat</a>
+            <a (click)="cerrarSesion()">Cerrar sesión</a>
+            <a href="/privacidad">Privacidad</a>
+            <a href="/sobreNosotros">Sobre nosotros</a>
+          </ng-container>
+          <ng-template #guestLinks>
+            <a href="/login">Iniciar sesión</a>
+            <a href="/registro">Crear cuenta</a>
+            <a href="/privacidad">Privacidad</a>
+            <a href="/sobreNosotros">Sobre nosotros</a>
+          </ng-template>
     </div>
 </nav>
