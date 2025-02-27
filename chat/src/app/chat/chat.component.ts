@@ -37,7 +37,7 @@ export interface NewChat {
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
-export class ChatComponent implements OnInit, AfterViewChecked {
+export class ChatComponent implements OnInit {
   @ViewChild('messagesContainer') private messagesContainer!: ElementRef;
   showAddChatModal = false;
   chats: Chat[] = [];
@@ -54,12 +54,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     const userIdStr = localStorage.getItem('userId') || '0';
     this.userId = parseInt(userIdStr);
   }
-
-  ngOnInit() {
-    this.loadChats();
-    // Simular recepción de nuevos mensajes cada 30 segundos
-    setInterval(() => this.simulateIncomingMessage(), 30000);
-  }
+ 
 
   get filteredUsers(): string[] {
     if (!this.searchTerm) {
@@ -70,10 +65,20 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     );
   }
   
-  ngAfterViewChecked() {
-    this.scrollToBottom();
+  
+  ngOnInit() {
+    this.loadChats();
+    setInterval(() => {
+      this.checkForNewMessages();
+    }, 1000);
+
   }
 
+  checkForNewMessages() {
+    if (this.current_chat !== null) {
+      this.loadMessages(this.current_chat);
+    }
+  }
   loadChats() {
     this.auth.get_chats().subscribe((response: any) => {
       this.chats = response;
@@ -101,9 +106,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       if (this.current_chat_messages.length > 0) {
         this.lastReadMessageId = this.current_chat_messages[this.current_chat_messages.length - 1].id;
       }
-      
       this.cdr.detectChanges();
-      this.scrollToBottom();
     });
   }
 
@@ -341,40 +344,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       }
     } catch (err) { }
   }
-
-  // Simular un mensaje entrante (para demostración)
-  simulateIncomingMessage(): void {
-    if (this.current_chat === null) return;
-    
-    // Simulación: 30% de probabilidad de recibir un mensaje
-    if (Math.random() > 0.7) {
-      const otherUsers = this.chats
-        .find(c => c.id === this.current_chat)?.users
-        .filter(u => u !== this.userId);
-      
-      if (otherUsers && otherUsers.length > 0) {
-        const randomUser = otherUsers[Math.floor(Math.random() * otherUsers.length)];
-        
-        // Crear mensaje de simulación
-        const newMessage: Message = {
-          id: this.generateTempId(),
-          chat: this.current_chat,
-          sender: randomUser,
-          text: `Este es un mensaje de prueba generado automáticamente (${new Date().toLocaleTimeString()})`,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-          delivered: true,
-          read: false
-        };
-        
-        // Añadir el mensaje a la lista
-        this.current_chat_messages.push(newMessage);
-        this.cdr.detectChanges();
-        this.scrollToBottom();
-      }
-    }
-
-  }
+ 
   openAddChatModal() {
     this.auth.get_usernames().subscribe((usuarios: string[]) => {
       this.users = usuarios;
@@ -386,28 +356,30 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   closeAddChatModal() {
     this.showAddChatModal = false;
   }
-  createChat(user: number) {
-    var userid = user
-    console.log('Creando chat con usuario', userid);
-    const chatData = {
-      chat_type: "DM",
-      user_id: userid, 
-      name: `Chat with User ${user}` // Opcional si name no es requerido
-    };
-    
-    this.auth.create_chat(chatData).subscribe(
-      response => {
-        this.chats.push(response);
-        this.select_chat(response.id);
-      },
-      error => {
-        console.error("Error al crear el chat:", error);
-        console.error("Error details:", error.error);
-      }
-    );
-    this.showAddChatModal = false;
+  
+  createChat(user: string) {
+    this.auth.get_id(user).subscribe((userid: number) => {
+      console.log('Creando chat con usuario', userid);
+      const chatData = {
+        user_id: userid,
+        chat_type: 'DM',
+        name: `Chat with ${user}`
+      };
+      
+      console.log('Sending chat data:', chatData);
+      this.auth.create_chat(chatData).subscribe(
+        response => {
+          this.chats.push(response);
+          this.select_chat(response.id);
+        },
+        error => {
+          console.error('Error al crear el chat:', error);
+          console.error('Error details:', error.error);
+        }
+      );
+      this.showAddChatModal = false;
+    });
   }
-  
-  
-  
+ 
+    
 }

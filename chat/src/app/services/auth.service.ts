@@ -111,12 +111,10 @@ export class AuthService {
     });
   }
   get_id(username: string): Observable<number> {
-    return this.http.post<{id: number}>(`${this.apiUrl}/fhu/get/`, {
-      headers: { Authorization: `Token ${this.getToken()}` },
-      params: { username }
+    return this.http.get<{id: number}>(`${this.apiUrl}/fhu/get/${username}/`, {
+      headers: { Authorization: `Token ${this.getToken()}` }
     }).pipe(
       map(response => response.id)
     );
   }
-  
 }

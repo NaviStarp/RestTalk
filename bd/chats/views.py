@@ -147,10 +147,8 @@ class GetUserByUsername(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
-    def get(self, request, *args, **kwargs):
-        print("GET request:", request.query_params)  # Debugging (remove in production)
-        
-        username = request.query_params.get('username')
+    def get(self, request, name, *args, **kwargs):        
+        username = name
         if not username:
             return Response({"error": "Username parameter is required"},
                             status=status.HTTP_400_BAD_REQUEST)

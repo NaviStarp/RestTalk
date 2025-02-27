@@ -3,7 +3,7 @@
   <div class="contacts-panel">
     <div class="user-header">
       <div class="avatar">
-        <img src="/api/placeholder/40/40" alt="Usuario">
+        <img src="../../assets/images/fotoIvan.jpeg" alt="Usuario">
       </div>
       <div class="header-icons">
         <i class="material-icons" (click)="openAddChatModal()">add</i>
@@ -23,7 +23,7 @@
            (click)="select_chat(chat.id)"
            [class.active]="current_chat === chat.id">
         <div class="contact-avatar">
-          <img src="/api/placeholder/48/48" alt="{{ chat.name }}">
+          <img src="../../assets/images/fotoIvan.jpeg" alt="">
         </div>
         <div class="contact-info">
           <div class="contact-name">{{ chat.name }}</div>
@@ -76,9 +76,9 @@
         </div>
 
         <!-- Indicador de mensajes no leídos -->
-        <div *ngIf="isFirstUnreadMessage(msg)" class="unread-messages-indicator">
+        <!-- <div *ngIf="isFirstUnreadMessage(msg)" class="unread-messages-indicator">
           Mensajes nuevos
-        </div>
+        </div> -->
         
         <!-- Mensaje individual -->
         <div 
@@ -150,9 +150,9 @@
           <input type="text" placeholder="Buscar un contacto" [(ngModel)]="searchTerm">
         </div>
         <div class="users-list">
-            <div *ngFor="let user of filteredUsers; let i = index" class="user-item" (click)="createChat(i)">
+          <div *ngFor="let user of filteredUsers" class="user-item" (click)="createChat(user)">
             <p>{{ user }}</p>
-            </div>
+          </div>
         </div>
       </div>
     </div>
