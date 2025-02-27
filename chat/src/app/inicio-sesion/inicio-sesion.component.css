@@ -132,7 +132,14 @@
     margin-top: 5px;
     margin-bottom: 10px;
   }
-  
+  /* Estilo para campos inválidos */
+  input:invalid {
+    border-color: #59db62;
+  }
+  /* Estilo para cuando los campos son válidos */
+  input:valid {
+    border-color: #59db62;
+  }
   .error-container {
     background-color: #ffecec;
     color: #e74c3c;
