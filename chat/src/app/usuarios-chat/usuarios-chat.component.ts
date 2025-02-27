@@ -39,33 +39,14 @@ export class UsuariosChatComponent implements OnInit, AfterViewInit {
     this.loadUsernames();
   }
 
-  ngAfterViewInit() {
-    this.populateSelect();
-  }
 
   loadUsernames() {
     this.authService.get_usernames().subscribe(usernames => {
-      if (Array.isArray(usernames)) {
         this.usuarios = usernames;
-        this.populateSelect();
-      } else {
-        console.error('Error: usernames is not an array');
-      }
+        console.log('Usuarios:', this.usuarios);
     });
   }
 
-  populateSelect() {
-    const selectElement = document.getElementById('chats_select');
-    if (selectElement) {
-      selectElement.innerHTML = ''; // Limpiamos el select antes de llenarlo
-      this.usuarios.forEach(username => {
-        const option = document.createElement('option');
-        option.value = username;
-        option.text = username;
-        selectElement.appendChild(option);
-      });
-    }
-  }
 
   clickCheckbox(event: any) {
     this.isDarkMode = event.target.checked;
