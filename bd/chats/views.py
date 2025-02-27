@@ -6,8 +6,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
+from django.contrib.auth import get_user_model
 
-
+User = get_user_model()
 class ChatView(generics.ListCreateAPIView):
     queryset = Chat.objects.all()
     serializer_class = ChatSerializer
@@ -30,7 +31,7 @@ class GetChatView(APIView):
         serializer = ChatSerializer(chats, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
         data = request.data
         serializer = ChatSerializer(data=data)
         if serializer.is_valid():
@@ -85,8 +86,44 @@ class CreateChatView(APIView):
     permission_classes = [IsAuthenticated]
     
     def post(self, request, *args, **kwargs):
-        data = request.data
-        data['users'] = [request.user.id, data['user_id']]
+        data = request.data.copy()
+        chat_type = data.get("chat_type", "").upper()
+        
+        if chat_type not in ["DM", "GROUP"]:
+            return Response(
+                {"chat_type": ["Invalid choice. Must be 'DM' or 'GROUP'."]}, 
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        # Convertir user_id a entero
+        user_id = data.get("user_id")
+        try:
+            user_id = int(user_id)
+        except (ValueError, TypeError):
+            return Response(
+                {"user_id": ["Invalid user ID. Must be a number."]},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+            
+        if not user_id:
+            return Response(
+                {"user_id": ["This field is required."]}, 
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        try:
+            other_user = User.objects.get(id=user_id)
+        except User.DoesNotExist:
+            return Response(
+                {"user_id": ["User not found."]}, 
+                status=status.HTTP_404_NOT_FOUND
+            )
+        
+        data["users"] = [request.user.id, other_user.id]
+        
+        if "name" not in data:
+            data["name"] = f"Chat with {other_user.username}"
+        
         serializer = ChatSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
@@ -106,4 +143,22 @@ class CreateMessageView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+class GetUserByUsername(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
+    def get(self, request, *args, **kwargs):
+        print("GET request:", request.query_params)  # Debugging (remove in production)
+        
+        username = request.query_params.get('username')
+        if not username:
+            return Response({"error": "Username parameter is required"},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        user_data = User.objects.filter(username=username).values("id").first()
+
+        if user_data:
+            return Response({"id": user_data["id"]}, status=status.HTTP_200_OK)
+        else:
+            return Response({"error": "User not found"},
+                            status=status.HTTP_404_NOT_FOUND)

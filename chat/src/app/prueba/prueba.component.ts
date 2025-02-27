@@ -58,9 +58,6 @@ export class PruebaComponent implements OnInit {
   }
  
   getUsernames() {
-    this.auth.get_usernames().subscribe(
-      (response: string[]) => console.log('Usernames obtenidos:', response), // Asegurarse de que se reciba un array de `string`
-      error => console.error('Error al obtener usernames:', error)
-    );
+   this.auth.get_usernames()
   }
 }

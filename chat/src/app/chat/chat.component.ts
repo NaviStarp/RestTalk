@@ -23,7 +23,13 @@ interface Message {
   delivered?: boolean;
   image_url?: string;
 }
-
+export interface NewChat {
+  user_id: number;  // Cambiado de user_id a users como array
+  chat_type: string;
+  name?: string;    // Opcional con ?
+  created_at?: string;  // Opcional, ya que probablemente se genera en el backend
+  updated_at?: string;  // Opcional, ya que probablemente se genera en el backend
+}
 @Component({
   selector: 'app-chat',
   imports: [FormsModule, DatePipe, CommonModule],
@@ -35,6 +41,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   @ViewChild('messagesContainer') private messagesContainer!: ElementRef;
   showAddChatModal = false;
   chats: Chat[] = [];
+  users: string[] = [];
   current_chat: number | null = null;
   current_chat_messages: Message[] = [];
   message = '';
@@ -42,7 +49,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   typingUsers: {[chatId: number]: boolean} = {};
   lastReadMessageId: number | null = null;
   lastMessageDates: {[date: string]: boolean} = {};
-
+  searchTerm = '';
   constructor(private auth: AuthService, private cdr: ChangeDetectorRef) {
     const userIdStr = localStorage.getItem('userId') || '0';
     this.userId = parseInt(userIdStr);
@@ -52,6 +59,15 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     this.loadChats();
     // Simular recepción de nuevos mensajes cada 30 segundos
     setInterval(() => this.simulateIncomingMessage(), 30000);
+  }
+
+  get filteredUsers(): string[] {
+    if (!this.searchTerm) {
+      return this.users;
+    }
+    return this.users.filter(user =>
+      user.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
   }
   
   ngAfterViewChecked() {
@@ -360,10 +376,38 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   }
   openAddChatModal() {
-    alert('Abriendo modal de agregar chat...');
-    this.showAddChatModal = true;
+    this.auth.get_usernames().subscribe((usuarios: string[]) => {
+      this.users = usuarios;
+      this.showAddChatModal = true;
+    });
   }
+  
+  
   closeAddChatModal() {
     this.showAddChatModal = false;
   }
+  createChat(user: number) {
+    var userid = user
+    console.log('Creando chat con usuario', userid);
+    const chatData = {
+      chat_type: "DM",
+      user_id: userid, 
+      name: `Chat with User ${user}` // Opcional si name no es requerido
+    };
+    
+    this.auth.create_chat(chatData).subscribe(
+      response => {
+        this.chats.push(response);
+        this.select_chat(response.id);
+      },
+      error => {
+        console.error("Error al crear el chat:", error);
+        console.error("Error details:", error.error);
+      }
+    );
+    this.showAddChatModal = false;
+  }
+  
+  
+  
 }

@@ -477,48 +477,109 @@
 }
 
 /* Añadir chat modal */
+/* Overlay para oscurecer el fondo */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Modal centrada y con animación */
 .add-chat-modal {
+  background: #fff;
+  border-radius: 10px;
+  max-width: 400px;
+  width: 90%;
+  padding: 20px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Animación de aparición */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Encabezado de la modal */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 1.5em;
+  color: #333;
+}
+
+/* Botón de cerrar */
+.close-btn {
+  cursor: pointer;
+  font-size: 24px;
+  color: #666;
+  transition: color 0.2s;
+}
+
+.close-btn:hover {
+  color: #000;
+}
+
+/* Cuerpo de la modal */
+.modal-body {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+/* Search Wrapper */
+.search-wrapper {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin-bottom: 15px;
+}
+
+.search-wrapper i.material-icons {
+  margin-right: 8px;
+  color: #888;
+}
+
+.search-wrapper input {
+  border: none;
+  outline: none;
+  width: 100%;
+}
+
+/* Lista de usuarios */
+.users-list {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  padding: 20px;
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  max-width: 300px;
-  margin: 50px auto;
+  gap: 10px;
 }
 
-.add-chat-modal h2 {
-  font-size: 1.2em;
-  font-weight: 500;
-}
-
-.add-chat-modal input {
-  border: 1px solid #dadada;
+.user-item {
+  padding: 10px;
+  border: 1px solid #f0f0f0;
   border-radius: 5px;
-  padding: 8px;
-  outline: none;
-}
-
-.add-chat-modal button {
-  background-color: #128C7E;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 8px;
   cursor: pointer;
   transition: background-color 0.2s;
 }
 
-.add-chat-modal button:hover {
-  background-color: #0C6B5E;
+.user-item:hover {
+  background-color: #f9f9f9;
 }
 
-/* Animación para el botón cuando se hace clic */
-.add-chat-modal button:active {
-  transform: scale(0.95);
-}
 
 /* Estilos para el modal de confirmación */
 

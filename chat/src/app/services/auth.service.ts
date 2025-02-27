@@ -21,6 +21,15 @@ interface Message {
   updated_at: string;
 }
 
+export interface NewChat {
+  user_id: number;  // Cambiado de user_id a users como array
+  chat_type: string;
+  name?: string;    // Opcional con ?
+  created_at?: string;  // Opcional, ya que probablemente se genera en el backend
+  updated_at?: string;  // Opcional, ya que probablemente se genera en el backend
+}
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -88,10 +97,26 @@ export class AuthService {
   
   get_usernames(): Observable<string[]> {
     console.log('Obteniendo usernames...');
-    return this.http.get<string[]>(`${this.apiUrl}/users/get/`, {
+    return this.http.get<{ request_user: string; users: string[] }>(`${this.apiUrl}/users/get/`, {
       headers: { Authorization: `Token ${this.getToken()}` }
     }).pipe(
-      tap(response => console.log('Usernames obtenidos:', response))
+      tap(response => console.log('Respuesta completa:', response)),
+      map(response => response.users)  // Extraemos el array de usuarios
     );
   }
+  
+  create_chat(chatData: NewChat): Observable<Chat> {
+    return this.http.post<Chat>(`${this.apiUrl}/chats/create/`, chatData, {
+      headers: { Authorization: `Token ${this.getToken()}` }
+    });
+  }
+  get_id(username: string): Observable<number> {
+    return this.http.post<{id: number}>(`${this.apiUrl}/fhu/get/`, {
+      headers: { Authorization: `Token ${this.getToken()}` },
+      params: { username }
+    }).pipe(
+      map(response => response.id)
+    );
+  }
+  
 }

@@ -138,22 +138,25 @@
       </button>
     </div>
   </div>
-
-<div class="add-chat-modal" *ngIf="showAddChatModal">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h3>Crear un nuevo chat</h3>
-      <i class="material-icons close-btn" (click)="closeAddChatModal()">close</i>
-    </div>
-    <div class="modal-body">
-      <div class="search-bar
-      ">
+  <div class="modal-overlay" *ngIf="showAddChatModal">
+    <div class="add-chat-modal">
+      <div class="modal-header">
+        <h3>Crear un nuevo chat</h3>
+        <i class="material-icons close-btn" (click)="closeAddChatModal()">close</i>
+      </div>
+      <div class="modal-body">
         <div class="search-wrapper">
           <i class="material-icons">search</i>
-          <input type="text" placeholder="Buscar un contacto">
+          <input type="text" placeholder="Buscar un contacto" [(ngModel)]="searchTerm">
         </div>
-        <div *ngFor="let item of users"></div>
-
+        <div class="users-list">
+            <div *ngFor="let user of filteredUsers; let i = index" class="user-item" (click)="createChat(i)">
+            <p>{{ user }}</p>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
 </div>
 
-</div>
