@@ -11,7 +11,7 @@ import { AuthService } from '../services/auth.service';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule]
 })
-export class UsuariosChatComponent implements OnInit, AfterViewInit {
+export class UsuariosChatComponent implements OnInit{
   isDarkMode = false;
   userForm: FormGroup;
   selectedUser: string | null = null;
