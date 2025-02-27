@@ -3,7 +3,7 @@ import { CambiarColorService } from '../services/cambiar-color.service';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
-
+import { ChangeDetectorRef } from '@angular/core';
 @Component({
   selector: 'app-usuarios-chat',
   templateUrl: './usuarios-chat.component.html',
@@ -22,7 +22,8 @@ export class UsuariosChatComponent implements OnInit{
   constructor(
     private cambiarColorService: CambiarColorService,
     private fb: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private cdr: ChangeDetectorRef  
   ) {
     this.userForm = this.fb.group({
       usuarios: ['']
@@ -37,15 +38,32 @@ export class UsuariosChatComponent implements OnInit{
 
     // Llamamos a la función para cargar los usuarios en el select
     this.loadUsernames();
-  }
-
-
-  loadUsernames() {
-    this.authService.get_usernames().subscribe(usernames => {
-        this.usuarios = usernames;
-        console.log('Usuarios:', this.usuarios);
+  
+    this.userForm.get('usuarios')?.valueChanges.subscribe(value => {
+      this.selectedUser = value;
     });
   }
+
+  loadUsernames() {
+    this.authService.get_usernames().subscribe({
+      next: (response: any) => {
+        console.log('Respuesta original:', response);
+        
+        // Verifica si la respuesta es un objeto y tiene la clave "users" que es un array
+        if (response && Array.isArray(response.users)) {
+          this.usuarios = response.users;
+          console.log('Usuarios extraídos:', this.usuarios);
+        } else {
+          console.error('Formato de respuesta inesperado:', response);
+          this.usuarios = [];
+        }
+      },
+      error: (error) => {
+        console.error('Error al cargar usuarios:', error);
+      }
+    });
+  }
+  
 
 
   clickCheckbox(event: any) {
